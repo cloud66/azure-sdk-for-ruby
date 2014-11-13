@@ -15,31 +15,31 @@
 # Represents an HTTP request that can perform synchronous queries to
 # an HTTP server, returning a HttpResponse
 module Azure
-  module BaseManagement
-    # This class is used for communicating with the Management certificate authentication API endpoint
-    class SqlManagementHttpRequest < ManagementHttpRequest
-      attr_accessor :uri
-      # Public: Creates the ManagementHttpRequest
-      #
-      # method  - Symbol. The HTTP method to use (:get, :post, :put, :del, etc...)
-      # path    - URI. The URI of the HTTP endpoint to query
-      # body    - IO or String. The request body (optional)
-      def initialize(method, path, body = nil)
-        if sql_endpoint?
-          super(method, path, body)
-          @headers['x-ms-version'] = '1.0'
-          @uri = URI.parse(Azure.config.sql_database_management_endpoint + Azure.config.subscription_id + path)
-        else
-          path = "/services/sqlservers#{path}"
-          super(method, path, body)
-        end
-      end
+	module BaseManagement
+		# This class is used for communicating with the Management certificate authentication API endpoint
+		class SqlManagementHttpRequest < ManagementHttpRequest
+			attr_accessor :uri
+			# Public: Creates the ManagementHttpRequest
+			#
+			# method  - Symbol. The HTTP method to use (:get, :post, :put, :del, etc...)
+			# path    - URI. The URI of the HTTP endpoint to query
+			# body    - IO or String. The request body (optional)
+			def initialize(method, path, body = nil, certificate_key, private_key, subscription_id)
+				if sql_endpoint?
+					super(method, path, body, certificate_key, private_key, subscription_id)
+					@headers['x-ms-version'] = '1.0'
+					@uri = URI.parse(Azure.config.sql_database_management_endpoint + subscription_id + path)
+				else
+					path = "/services/sqlservers#{path}"
+					super(method, path, body, certificate_key, private_key, subscription_id)
+				end
+			end
 
-      private
+			private
 
-      def sql_endpoint?
-        Azure.config.sql_database_authentication_mode == :sql_server
-      end
-    end
-  end
+			def sql_endpoint?
+				Azure.config.sql_database_authentication_mode == :sql_server
+			end
+		end
+	end
 end
