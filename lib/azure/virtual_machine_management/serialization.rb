@@ -249,8 +249,9 @@ module Azure
             role_name = xml_content(instance, 'RoleName')
             vm.status = xml_content(instance, 'InstanceStatus')
             vm.vm_name = role_name.downcase
+			vm.internal_ip = xml_content(instance, 'IpAddress')
             vm.ipaddress = xml_content(ip, 'Address')
-            vm.role_size = xml_content(instance, 'InstanceSize')
+			vm.role_size = xml_content(instance, 'InstanceSize')
             vm.hostname = xml_content(instance, 'HostName')
             vm.cloud_service_name = cloud_service_name.downcase
             vm.deployment_name = xml_content(deployXML, 'Deployment Name')
