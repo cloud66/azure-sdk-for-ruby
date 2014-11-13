@@ -54,6 +54,7 @@ module Azure
 				@cert_key = certificate_key
 				@pr_key = private_key
 				@mng_cert = management_certificate
+				@subscr_id = subscription_id
 			end
 
 			def validate_configuration(management_certificate, subscription_id)
