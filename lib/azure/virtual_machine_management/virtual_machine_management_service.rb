@@ -60,7 +60,8 @@ module Azure
 				vm = server.first
 
 				unless vm.nil?
-					path = "/services/hostedservices/#{vm.cloud_service_name}/deployments/#{vm.deployment_name}/roles/#{vm_name}"
+					#path = "/services/hostedservices/#{vm.cloud_service_name}/deployments/#{vm.deployment_name}/roles/#{vm_name}"
+					path = "/services/hostedservices/#{vm.cloud_service_name}/deployments/#{vm.deployment_name}"
 					request = ManagementHttpRequest.new(:get, path, nil, self.cert_key, self.pr_key, self.subscr_id)
 					response = request.call
 					return response.to_s
