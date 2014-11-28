@@ -27,7 +27,8 @@ module Azure
           image.name = xml_content(image_node, 'Name')
           image.category = xml_content(image_node, 'Category')
           image.locations = xml_content(image_node, 'Location')
-          os_images << image
+          image.image_family = xml_content(image_node, 'ImageFamily')
+		  os_images << image
         end
         os_images
       end
