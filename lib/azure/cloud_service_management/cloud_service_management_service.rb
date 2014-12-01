@@ -91,7 +91,8 @@ module Azure
 			end
 
 			def get_cloud_service_properties(name)
-				request_path = "/services/hostedservices/#{name}?embed-detail=true"
+				#request_path = "/services/hostedservices/#{name}?embed-detail=true"
+				request_path = "/services/hostedservices/#{name}"
 				request = ManagementHttpRequest.new(:get, request_path, nil, self.pr_key, self.subscr_id)
 				response = request.call
 				Serialization.cloud_services_from_xml(response).first
