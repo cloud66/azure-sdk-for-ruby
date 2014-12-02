@@ -37,6 +37,7 @@ require 'azure/cloud_service_management/cloud_service_management_service'
 require 'azure/base_management/location'
 require 'azure/sql_database_management/sql_database_management_service'
 require 'azure/virtual_network_management/virtual_network_management_service'
+require 'azure/traffic_management/traffic_management_service'
 
 # add some aliases for convenience
 Azure::BlobService = Azure::Blob::BlobService
