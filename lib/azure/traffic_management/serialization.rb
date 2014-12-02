@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------
-# # Copyright (c) Microsoft and contributors. All rights reserved.
+# Copyright 2013 Microsoft Open Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,20 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
+require 'azure/traffic_management/profile'
+require 'base64'
 
 module Azure
-  class Version
-    MAJOR = 0 unless defined? MAJOR
-    MINOR = 6 unless defined? MINOR
-    UPDATE = 4 unless defined? UPDATE
-    PRE = 8 unless defined? PRE
+  module TrafficManagement
+    module Serialization
 
-    class << self
-
-      # @return [String]
-      def to_s
-        [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
+	def self.profiles_from_xml(profilesXML)
+        unless profilesXML.nil? or profilesXML.at_css('Profiles').nil?
+          profiles = profilesXML.css('Profiles Profile')
+          pfs = []
+		  profiles.each do |profile|
+            pf = Profile.new
+			pf.domain_name = xml_content(profile, 'DomainName')
+			pf.name = xml_content(profile, 'Name')
+			pf.status = xml_content(profile, 'Status')
+            pfs << pf
+          end
+          pfs
+        end
       end
+
     end
   end
 end

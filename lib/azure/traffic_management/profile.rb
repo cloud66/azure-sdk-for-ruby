@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------
-# # Copyright (c) Microsoft and contributors. All rights reserved.
+# Copyright 2013 Microsoft Open Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +14,15 @@
 #--------------------------------------------------------------------------
 
 module Azure
-  class Version
-    MAJOR = 0 unless defined? MAJOR
-    MINOR = 6 unless defined? MINOR
-    UPDATE = 4 unless defined? UPDATE
-    PRE = 8 unless defined? PRE
-
-    class << self
-
-      # @return [String]
-      def to_s
-        [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
+  module TrafficManagement
+    class Profile
+      def initialize
+        yield self if block_given?
       end
+
+      attr_accessor :domain_name
+      attr_accessor :name
+      attr_accessor :status
     end
   end
 end
