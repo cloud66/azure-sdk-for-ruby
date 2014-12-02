@@ -1,7 +1,7 @@
 require 'azure/traffic_management/serialization'
 
 module Azure
-	module TraficManagement
+	module TrafficManagement
 		class TrafficManagementService < BaseManagementService
 			def initialize(management_certificate, subscription_id)
 				super(management_certificate, subscription_id)
