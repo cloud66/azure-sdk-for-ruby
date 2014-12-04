@@ -104,7 +104,7 @@ module Azure
 
 							xml.LoadBalancingMethod  params[:load_balancing_method] unless params[:load_balancing_method].nil?
 							Loggerx.info '66'
-							unless params[:end_points].nil? || !params[:end_points].is_a?('Array')
+							unless params[:end_points].nil? || params[:end_points].class != Array
 								Loggerx.info '77'
 
 								xml.Endpoints do
