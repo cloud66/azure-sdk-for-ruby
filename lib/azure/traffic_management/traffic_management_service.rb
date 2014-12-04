@@ -33,6 +33,17 @@ module Azure
 			rescue Exception => e
 				e.message
 			end
+
+			def list_defenitions(profile_name)
+				definitions = []
+				request_path = "/services/WATM/profiles/#{profile_name}/definitions"
+				request = ManagementHttpRequest.new(:get, request_path, nil, self.cert_key, self.pr_key, self.subscr_id)
+				request.warn = true
+				response = request.call
+				definitions << Serialization.definitions_from_xml(response)
+				definitions.flatten.compact
+			end
+
 		end
 	end
 end
