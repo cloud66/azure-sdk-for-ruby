@@ -80,34 +80,33 @@ module Azure
 								xml.TimeToLiveInSeconds params[:time_to_live]
 							end
 						end
-
 						xml.Monitors do
 							xml.Monitor do
-								xml.IntervalInSeconds = params[:monitor_interval] unless params[:monitor_interval].nil?
-								xml.TimeoutInSeconds = params[:monitor_timeout] unless params[:monitor_timeout].nil?
-								xml.ToleratedNumberOfFailures = params[:monitor_tolerated_number_of_failures] unless params[:monitor_tolerated_number_of_failures].nil?
-								xml.Protocol = params[:monitor_protocol] unless params[:monitor_protocol].nil?
-								xml.Port = params[:monitor_port] unless params[:monitor_port].nil?
+								xml.IntervalInSeconds  params[:monitor_interval] unless params[:monitor_interval].nil?
+								xml.TimeoutInSeconds  params[:monitor_timeout] unless params[:monitor_timeout].nil?
+								xml.ToleratedNumberOfFailures  params[:monitor_tolerated_number_of_failures] unless params[:monitor_tolerated_number_of_failures].nil?
+								xml.Protocol  params[:monitor_protocol] unless params[:monitor_protocol].nil?
+								xml.Port  params[:monitor_port] unless params[:monitor_port].nil?
 								xml.HttpOptions do
-									xml.Verb = params[:monitor_http_verb] unless params[:monitor_http_verb].nil?
-									xml.RelativePath = params[:monitor_http_relative_path] unless params[:monitor_http_relative_path].nil?
-									xml.ExpectedStatusCode = params[:monitor_http_expected_status_code] unless params[:monitor_http_expected_status_code].nil?
+									xml.Verb  params[:monitor_http_verb] unless params[:monitor_http_verb].nil?
+									xml.RelativePath  params[:monitor_http_relative_path] unless params[:monitor_http_relative_path].nil?
+									xml.ExpectedStatusCode  params[:monitor_http_expected_status_code] unless params[:monitor_http_expected_status_code].nil?
 								end
 							end
 						end
 
 						xml.Policy do
-							xml.LoadBalancingMethod = params[:load_balancing_method] unless params[:load_balancing_method].nil?
+							xml.LoadBalancingMethod  params[:load_balancing_method] unless params[:load_balancing_method].nil?
 							unless params[:end_points].nil? || !params[:end_points].is_a?('Array')
 								xml.Endpoints do
 									params[:end_points].each do |ep|
 										xml.Endpoint do
-											xml.DomainName = ep[:domain_name] unless ep[:domain_name].nil?
-											xml.Status = ep[:status] unless ep[:status].nil?
-											xml.Type = ep[:type] unless ep[:type].nil?
-											xml.Location = ep[:location] unless ep[:location].nil?
-											xml.MinChildEndpoints = ep[:min_child_endpoints] unless ep[:min_child_endpoints].nil?
-											xml.Weight = ep[:weight] unless ep[:weight].nil?
+											xml.DomainName  ep[:domain_name] unless ep[:domain_name].nil?
+											xml.Status  ep[:status] unless ep[:status].nil?
+											xml.Type  ep[:type] unless ep[:type].nil?
+											xml.Location  ep[:location] unless ep[:location].nil?
+											xml.MinChildEndpoints  ep[:min_child_endpoints] unless ep[:min_child_endpoints].nil?
+											xml.Weight  ep[:weight] unless ep[:weight].nil?
 										end
 									end
 								end
