@@ -132,8 +132,6 @@ module Azure
 				Loggerx.info '1111'
 
 				builder.doc.to_xml
-				Loggerx.info '1212'
-
 			end
 		end
 	end

@@ -46,6 +46,11 @@ module Azure
 
 			def create_definition(profile_name,params)
 				body = Serialization.definition_to_xml(params)
+
+				Loggerx.info 'body start'
+				Loggerx.info body
+				Loggerx.info 'body end'
+
 				path = "services/WATM/profiles/#{profile_name}/definitions"
 				Loggerx.info 'Definition creation in progress...'
 				request = ManagementHttpRequest.new(:post, path, body, self.cert_key, self.pr_key, self.subscr_id)

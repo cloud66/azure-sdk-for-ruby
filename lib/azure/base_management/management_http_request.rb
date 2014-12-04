@@ -55,6 +55,11 @@ module Azure
 				http = http_setup
 				# http.set_debug_output($stdout)
 				response = wait_for_completion(HttpResponse.new(http.request(request)))
+				unless response.nil?
+					Loggerx.info 'responce start'
+					Loggerx.info response.body
+					Loggerx.info 'responce end'
+				end
 				Nokogiri::XML response.body unless response.nil?
 			end
 
