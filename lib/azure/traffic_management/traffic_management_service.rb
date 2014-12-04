@@ -34,7 +34,7 @@ module Azure
 				e.message
 			end
 
-			def list_defenitions(profile_name)
+			def list_definitions(profile_name)
 				definitions = []
 				request_path = "/services/WATM/profiles/#{profile_name}/definitions"
 				request = ManagementHttpRequest.new(:get, request_path, nil, self.cert_key, self.pr_key, self.subscr_id)
@@ -42,6 +42,16 @@ module Azure
 				response = request.call
 				definitions << Serialization.definitions_from_xml(response)
 				definitions.flatten.compact
+			end
+
+			def create_definition(profile_name,params)
+				body = Serialization.definition_to_xml(params)
+				path = "services/WATM/profiles/#{profile_name}/definitions"
+				Loggerx.info 'Definition creation in progress...'
+				request = ManagementHttpRequest.new(:post, path, body, self.cert_key, self.pr_key, self.subscr_id)
+				request.call
+			rescue Exception => e
+				e.message
 			end
 
 		end
