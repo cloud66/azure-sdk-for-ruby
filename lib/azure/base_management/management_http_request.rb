@@ -59,6 +59,8 @@ module Azure
 					Loggerx.info 'responce start'
 					Loggerx.info response.body
 					Loggerx.info 'responce end'
+				else
+					Loggerx.info 'Fucking responce is empty'
 				end
 				Nokogiri::XML response.body unless response.nil?
 			end
