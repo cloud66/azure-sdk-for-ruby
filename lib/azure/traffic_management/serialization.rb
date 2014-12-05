@@ -80,38 +80,48 @@ module Azure
 								xml.TimeToLiveInSeconds params[:time_to_live]
 							end
 						end
-						xml.Monitors do
-							xml.Monitor do
-								xml.IntervalInSeconds  params[:monitor_interval] unless params[:monitor_interval].nil?
-								xml.TimeoutInSeconds  params[:monitor_timeout] unless params[:monitor_timeout].nil?
-								xml.ToleratedNumberOfFailures  params[:monitor_tolerated_number_of_failures] unless params[:monitor_tolerated_number_of_failures].nil?
-								xml.Protocol  params[:monitor_protocol] unless params[:monitor_protocol].nil?
-								xml.Port  params[:monitor_port] unless params[:monitor_port].nil?
-								xml.HttpOptions do
-									xml.Verb  params[:monitor_http_verb] unless params[:monitor_http_verb].nil?
-									xml.RelativePath  params[:monitor_http_relative_path] unless params[:monitor_http_relative_path].nil?
-									xml.ExpectedStatusCode  params[:monitor_http_expected_status_code] unless params[:monitor_http_expected_status_code].nil?
-								end
-							end
-						end
 
-						xml.Policy do
-							xml.LoadBalancingMethod  params[:load_balancing_method] unless params[:load_balancing_method].nil?
-							unless params[:end_points].nil? || params[:end_points].class != Array
-								xml.Endpoints do
-									params[:end_points].each do |ep|
-										xml.Endpoint do
-											xml.DomainName  ep[:domain_name] unless ep[:domain_name].nil?
-											xml.Status  ep[:status] unless ep[:status].nil?
-											xml.Type  ep[:type] unless ep[:type].nil?
-											xml.Location  ep[:location] unless ep[:location].nil?
-											xml.MinChildEndpoints  ep[:min_child_endpoints] unless ep[:min_child_endpoints].nil?
-											xml.Weight  ep[:weight] unless ep[:weight].nil?
+						http_option_not_needed = params[:monitor_http_verb].nil? && params[:monitor_http_relative_path].nil? && params[:monitor_http_expected_status_code].nil?
+						monitor_not_needed = params[:monitor_interval].nil? && params[:monitor_timeout].nil? && params[:monitor_tolerated_number_of_failures].nil? && params[:monitor_protocol].nil? && params[:monitor_port].nil? && http_option_not_needed
+
+						unless monitor_not_needed
+							xml.Monitors do
+								xml.Monitor do
+									xml.IntervalInSeconds  params[:monitor_interval] unless params[:monitor_interval].nil?
+									xml.TimeoutInSeconds  params[:monitor_timeout] unless params[:monitor_timeout].nil?
+									xml.ToleratedNumberOfFailures  params[:monitor_tolerated_number_of_failures] unless params[:monitor_tolerated_number_of_failures].nil?
+									xml.Protocol  params[:monitor_protocol] unless params[:monitor_protocol].nil?
+									xml.Port  params[:monitor_port] unless params[:monitor_port].nil?
+									unless http_option_not_needed
+										xml.HttpOptions do
+											xml.Verb  params[:monitor_http_verb] unless params[:monitor_http_verb].nil?
+											xml.RelativePath  params[:monitor_http_relative_path] unless params[:monitor_http_relative_path].nil?
+											xml.ExpectedStatusCode  params[:monitor_http_expected_status_code] unless params[:monitor_http_expected_status_code].nil?
 										end
 									end
 								end
 							end
+						end
 
+						unless params[:load_balancing_method].nil? && params[:end_points].nil?
+							xml.Policy do
+								xml.LoadBalancingMethod  params[:load_balancing_method] unless params[:load_balancing_method].nil?
+								unless params[:end_points].nil? || params[:end_points].class != Array
+									xml.Endpoints do
+										params[:end_points].each do |ep|
+											next if ep[:domain_name].nil? && ep[:status].nil? && ep[:type].nil? && ep[:location].nil? && ep[:min_child_endpoints].nil? && ep[:weight].nil?
+											xml.Endpoint do
+												xml.DomainName  ep[:domain_name] unless ep[:domain_name].nil?
+												xml.Status  ep[:status] unless ep[:status].nil?
+												xml.Type  ep[:type] unless ep[:type].nil?
+												xml.Location  ep[:location] unless ep[:location].nil?
+												xml.MinChildEndpoints  ep[:min_child_endpoints] unless ep[:min_child_endpoints].nil?
+												xml.Weight  ep[:weight] unless ep[:weight].nil?
+											end
+										end
+									end
+								end
+							end
 						end
 					end
 				end
