@@ -70,19 +70,16 @@ module Azure
 			end
 
 			def self.definition_to_xml(params)
-				Loggerx.info '11'
 				builder = Nokogiri::XML::Builder.new do |xml|
 					xml.Definition(
 							'xmlns' => 'http://schemas.microsoft.com/windowsazure',
 							'xmlns:i' => 'http://www.w3.org/2001/XMLSchema-instance'
 					) do
-						Loggerx.info '22'
 						unless params[:time_to_live].nil?
 							xml.DnsOptions do
 								xml.TimeToLiveInSeconds params[:time_to_live]
 							end
 						end
-						Loggerx.info '33'
 						xml.Monitors do
 							xml.Monitor do
 								xml.IntervalInSeconds  params[:monitor_interval] unless params[:monitor_interval].nil?
@@ -97,24 +94,13 @@ module Azure
 								end
 							end
 						end
-						Loggerx.info '44'
 
 						xml.Policy do
-							Loggerx.info '55'
-
 							xml.LoadBalancingMethod  params[:load_balancing_method] unless params[:load_balancing_method].nil?
-							Loggerx.info '66'
 							unless params[:end_points].nil? || params[:end_points].class != Array
-								Loggerx.info '77'
-
 								xml.Endpoints do
-									Loggerx.info '88'
-
 									params[:end_points].each do |ep|
-										Loggerx.info '99'
 										xml.Endpoint do
-											Loggerx.info '1010'
-
 											xml.DomainName  ep[:domain_name] unless ep[:domain_name].nil?
 											xml.Status  ep[:status] unless ep[:status].nil?
 											xml.Type  ep[:type] unless ep[:type].nil?
@@ -129,8 +115,6 @@ module Azure
 						end
 					end
 				end
-				Loggerx.info '1111'
-
 				builder.doc.to_xml
 			end
 		end

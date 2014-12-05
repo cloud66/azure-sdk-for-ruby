@@ -18,7 +18,7 @@ module Azure
     MAJOR = 0 unless defined? MAJOR
     MINOR = 6 unless defined? MINOR
     UPDATE = 5 unless defined? UPDATE
-    PRE = 8 unless defined? PRE
+    PRE = 9 unless defined? PRE
 
     class << self
 

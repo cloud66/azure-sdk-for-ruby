@@ -7,9 +7,6 @@ module Azure
 				super(management_certificate, subscription_id)
 			end
 
-			# Public: Get a lists of virtual machines available under the current subscription.
-			#
-			# Returns an list of Azure::VirtualMachineManagement::VirtualMachine instances.
 			def list_profiles
 				profiles = []
 				request_path = '/services/WATM/profiles'
@@ -46,12 +43,7 @@ module Azure
 
 			def create_definition(profile_name,params)
 				body = Serialization.definition_to_xml(params)
-
-				Loggerx.info 'body start'
-				Loggerx.info body
-				Loggerx.info 'body end'
-
-				path = "services/WATM/profiles/#{profile_name}/definitions"
+				path = "/services/WATM/profiles/#{profile_name}/definitions"
 				Loggerx.info 'Definition creation in progress...'
 				request = ManagementHttpRequest.new(:post, path, body, self.cert_key, self.pr_key, self.subscr_id)
 				request.call
