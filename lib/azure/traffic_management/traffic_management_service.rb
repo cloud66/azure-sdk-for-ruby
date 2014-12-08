@@ -31,6 +31,16 @@ module Azure
 				e.message
 			end
 
+			def delete_profile(profile_name)
+				Loggerx.info 'Deleting profile...'
+				path = "/services/WATM/profiles/#{profile_name}"
+				request = ManagementHttpRequest.new(:delete, path, nil, self.cert_key, self.pr_key, self.subscr_id)
+				request.call
+				sleep 20
+			rescue Exception => e
+				e.message
+			end
+
 			def list_definitions(profile_name)
 				definitions = []
 				request_path = "/services/WATM/profiles/#{profile_name}/definitions"
