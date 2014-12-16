@@ -65,7 +65,15 @@ module Azure
             xml.Name options[:deployment_name]
             xml.DeploymentSlot 'Production'
             xml.Label Base64.encode64(options[:deployment_name]).strip
-            xml.RoleList { xml.Role('i:type' => 'PersistentVMRole') }
+            xml.RoleList do
+				xml.Role('i:type' => 'PersistentVMRole') do
+					if options[:root_disk_size]
+						xml.OSVirtualHardDisk do
+							xml.ResizedSizeInGB options[:root_disk_size]
+						end
+					end
+				end
+			end
             if options[:virtual_network_name]
               xml.VirtualNetworkName options[:virtual_network_name]
             end
