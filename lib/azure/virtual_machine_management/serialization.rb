@@ -65,15 +65,7 @@ module Azure
             xml.Name options[:deployment_name]
             xml.DeploymentSlot 'Production'
             xml.Label Base64.encode64(options[:deployment_name]).strip
-            xml.RoleList do
-				xml.Role('i:type' => 'PersistentVMRole') do
-					if options[:root_disk_size]
-						xml.OSVirtualHardDisk do
-							xml.ResizedSizeInGB options[:root_disk_size]
-						end
-					end
-				end
-			end
+            xml.RoleList { xml.Role('i:type' => 'PersistentVMRole') }
             if options[:virtual_network_name]
               xml.VirtualNetworkName options[:virtual_network_name]
             end
@@ -117,6 +109,9 @@ module Azure
             xml.OSVirtualHardDisk do
               xml.MediaLink 'http://' + options[:storage_account_name] + '.blob.core.windows.net/vhds/' + (Time.now.strftime('disk_%Y_%m_%d_%H_%M')) + '.vhd'
               xml.SourceImageName params[:image]
+			  if options.has_key?(:root_disk_size)
+				  xml.ResizedSizeInGB options[:root_disk_size]
+			  end
             end
             xml.RoleSize options[:vm_size]
           end
