@@ -106,7 +106,7 @@ module Azure
 			# Returns:  None
 			def delete_cloud_service(cloud_service_name)
 				request_path = "/services/hostedservices/#{cloud_service_name}"
-				request = ManagementHttpRequest.new(:delete, request_path, nil, self.pr_key, self.subscr_id)
+				request = ManagementHttpRequest.new(:delete, request_path, nil, self.cert_key, self.pr_key, self.subscr_id)
 				Loggerx.info "Deleting cloud service #{cloud_service_name}. \n"
 				request.call
 			end
@@ -122,7 +122,7 @@ module Azure
 			# Returns NONE
 			def delete_cloud_service_deployment(cloud_service_name)
 				request_path = "/services/hostedservices/#{cloud_service_name}/deploymentslots/production"
-				request = ManagementHttpRequest.new(:delete, request_path, nil, self.pr_key, self.subscr_id)
+				request = ManagementHttpRequest.new(:delete, request_path, nil, self.cert_key, self.pr_key, self.subscr_id)
 				Loggerx.info "Deleting deployment of cloud service \"#{cloud_service_name}\" ..."
 				request.call
 			end
@@ -132,7 +132,7 @@ module Azure
 				request_path = "/services/hostedservices/#{cloud_service_name}/certificates"
 				body = Serialization.add_certificate_to_xml(data)
 				Loggerx.info "Uploading certificate to cloud service #{cloud_service_name}..."
-				request = ManagementHttpRequest.new(:post, request_path, body, self.pr_key, self.subscr_id)
+				request = ManagementHttpRequest.new(:post, request_path, body, self.cert_key, self.pr_key, self.subscr_id)
 				request.call
 			end
 		end
