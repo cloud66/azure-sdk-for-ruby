@@ -544,7 +544,7 @@ module Azure
 			end
 
 			def validate_role_size(vm_size)
-				valid_role_sizes = %w(ExtraSmall Small Medium Large ExtraLarge A5 A6 A7 A8 A9 STANDARD_D1 STANDARD_D2 STANDARD_D3 STANDARD_D4 STANDARD_D11 STANDARD_D12 STANDARD_D13 STANDARD_D14)
+				valid_role_sizes = %w(ExtraSmall Small Medium Large ExtraLarge A5 A6 A7 A8 A9 Standard_D1 Standard_D2 Standard_D3 Standard_D4 Standard_D11 Standard_D12 Standard_D13 Standard_D14)
 				if vm_size && !valid_role_sizes.include?(vm_size)
 					Loggerx.error_with_exit "Value '#{vm_size}' specified for parameter 'vm_size' is invalid. Allowed values are 'ExtraSmall,Small,Medium,Large,ExtraLarge,A6,A7'"
 				end
