@@ -489,7 +489,7 @@ module Azure
 			end
 
 			def generate_storage_account_name(vm_name)
-				random_string((vm_name + 'storage').downcase[0..23]).gsub(/[^0-9a-z ]/i, '').downcase[0..23]
+				random_string((vm_name + 'storage').downcase[0..18]).gsub(/[^0-9a-z ]/i, '').downcase[0..23]
 			end
 
 			def validate_deployment_params(params, options, add_role = false)
