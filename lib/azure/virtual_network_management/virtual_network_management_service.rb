@@ -73,7 +73,7 @@ module Azure
 			#
 			# Returns None
 			def set_virtual_network(vnet,
-									affinity_group,
+									location,
 									address_space,
 									options = {
 											subnet: [],
@@ -83,7 +83,7 @@ module Azure
 				body = Serialization.virtual_network_to_xml(self.mng_cert,
 															self.subscr_id,
 															vnet,
-															affinity_group,
+															location,
 															address_space,
 															options)
 				request = ManagementHttpRequest.new(:put, request_path, body, self.cert_key, self.pr_key, self.subscr_id)
