@@ -37,7 +37,11 @@ module Azure
             virtual_network_service_xml,
             'AffinityGroup'
           )
-          virtual_network.state = xml_content(
+		  virtual_network.location = xml_content(
+		    virtual_network_service_xml,
+		    'Location'
+		  )
+		  virtual_network.state = xml_content(
             virtual_network_service_xml,
             'State'
           )
@@ -69,8 +73,10 @@ module Azure
         virtual_networks.compact
       end
 
-      def self.virtual_network_to_xml(management_certificate, subscription_id,vnet_name,
-                                      affinity_group,
+      def self.virtual_network_to_xml(management_certificate,
+			                          subscription_id,
+			                          vnet_name,
+                                      location,
                                       address_spaces,
                                       options = {})
         options[:dns] ||= {}
@@ -104,6 +110,7 @@ module Azure
                     }
                     virtual_network_site(xml,
                                          vnet.name,
+										 vnet.location,
                                          vnet.affinity_group,
                                          vnet.address_space,
                                          others)
@@ -111,7 +118,8 @@ module Azure
                 end
                 virtual_network_site(xml,
                                      vnet_name,
-                                     affinity_group,
+                                     location,
+									 nil,
                                      address_spaces,
                                      options)
               end
@@ -125,12 +133,14 @@ module Azure
 
       def self.virtual_network_site(xml,
                                     vnet_name,
+	  								location,
                                     affinity_group,
                                     address_spaces,
                                     options)
         xml.VirtualNetworkSite(
           'name' => vnet_name,
-          'AffinityGroup' => affinity_group
+          'AffinityGroup' => affinity_group,
+		  'Location' => location
         ) do
           xml.DnsServersRef do
             options[:dns].each do |dns|
@@ -159,8 +169,6 @@ module Azure
       end
 
       def self.dns_server_to_xml(xml, dns_servers, new_dns_servers)
-        dns_names = []
-
         dns_list = {}
         dns_list.merge!(merge_dns(new_dns_servers))
         dns_list.merge!(merge_dns(dns_servers))
