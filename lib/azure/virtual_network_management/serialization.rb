@@ -69,7 +69,7 @@ module Azure
         virtual_networks.compact
       end
 
-      def self.virtual_network_to_xml(vnet_name,
+      def self.virtual_network_to_xml(management_certificate, subscription_id,vnet_name,
                                       affinity_group,
                                       address_spaces,
                                       options = {})
@@ -82,7 +82,7 @@ module Azure
         address_spaces.each do |address_space|
           IPAddr.validate_address_space(address_space)
         end
-        vnet_service = Azure::VirtualNetworkManagementService.new
+        vnet_service = Azure::VirtualNetworkManagementService.new(management_certificate, subscription_id)
         vnets = vnet_service.list_virtual_networks
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.NetworkConfiguration(

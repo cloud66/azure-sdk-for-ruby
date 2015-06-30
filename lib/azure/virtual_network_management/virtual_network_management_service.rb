@@ -80,7 +80,9 @@ module Azure
 											dns: []
 									})
 				request_path = '/services/networking/media'
-				body = Serialization.virtual_network_to_xml(vnet,
+				body = Serialization.virtual_network_to_xml(self.mng_cert,
+															self.subscr_id,
+															vnet,
 															affinity_group,
 															address_space,
 															options)
