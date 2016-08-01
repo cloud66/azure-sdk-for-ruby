@@ -549,9 +549,9 @@ module Azure
 			end
 
 			def validate_role_size(vm_size)
-				valid_role_sizes = %w(extrasmall small medium large extralarge a5 a6 a7 a8 a9 a10 a11 standard_d1 standard_d2 standard_d3 standard_d4 standard_d11 standard_d12 standard_d13 standard_d14 d1_v2 d2_v2 d3_v2 d4_v2 d5_v2 d11_v2 d12_v2 d13_v2 d14_v2 f1 f2 f4 f8 f16 g1 g2 g3 g4 g5)
+				valid_role_sizes = %w(extrasmall small medium large extralarge a5 a6 a7 a8 a9 a10 a11 standard_d1 standard_d2 standard_d3 standard_d4 standard_d11 standard_d12 standard_d13 standard_d14 standard_d1_v2 standard_d2_v2 standard_d3_v2 standard_d4_v2 standard_d5_v2 standard_d11_v2 standard_d12_v2 standard_d13_v2 standard_d14_v2 standard_f1 standard_f2 standard_f4 standard_f8 standard_f16 standard_g1 standard_g2 standard_g3 standard_g4 standard_g5)
 				if vm_size && !valid_role_sizes.include?(vm_size.downcase)
-					Loggerx.error_with_exit "Value '#{vm_size}' specified for parameter 'vm_size' is invalid. Allowed values are 'ExtraSmall,Small,Medium,Large,ExtraLarge,A6,A7,A8,A9,A10,A11,Standard_D1,Standard_D2,Standard_D3,Standard_D4,Standard_D11,Standard_D12,Standard_D13,Standard_D14,D1_v2,D2_v2,D3_v2,D4_v2,D5_v2,D11_v2,D12_v2,D13_v2,D14_v2,F1,F2,F4,F8,F16,G1,G2,G3,G4,G5'"
+					Loggerx.error_with_exit "Value '#{vm_size}' specified for parameter 'vm_size' is invalid. Allowed values are 'ExtraSmall,Small,Medium,Large,ExtraLarge,A6,A7,A8,A9,A10,A11,Standard_D1,Standard_D2,Standard_D3,Standard_D4,Standard_D11,Standard_D12,Standard_D13,Standard_D14,Standard_D1_v2,Standard_D2_v2,Standard_D3_v2,Standard_D4_v2,Standard_D5_v2,Standard_D11_v2,Standard_D12_v2,Standard_D13_v2,Standard_D14_v2,Standard_F1,Standard_F2,Standard_F4,Standard_F8,Standard_F16,Standard_G1,Standard_G2,Standard_G3,Standard_G4,Standard_G5'"
 				end
 			end
 
